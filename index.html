@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>欢迎使用考前练习工具</title>
+    <title>欢迎使用XC考前练习工具</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <script src="https://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -23,7 +23,7 @@
 
     <div data-role="page" id="HomePage">
         <div data-role="header" style="background-color:darkcyan;color:white;text-shadow:0 0 black;">
-            <h1 style="font-size: 20px;">携程考前练习</h1>
+            <h1 style="font-size: 20px;">XC考前练习</h1>
         </div>
         <div data-role="content">
             <h1 style="text-align:center;font-size:40px;">&nbsp;&nbsp;&nbsp;练什么？</h1>
@@ -55,7 +55,7 @@
 
         function InitalizePracticePage(){
             showAnswer = false;
-            var HashMap = new Map();
+            HashMap = new Map();
             len = target.length
             qlen = qIndex.length
             $("#hint").text(hint);
@@ -63,11 +63,19 @@
         }
 
         function FillQuestion(){
-            i = parseInt(Math.random()*len);
+            if (HashMap.size > 0 && Math.random()>.5){
+                var temp = HashMap.keys()
+                var times = Math.random() * HashMap.size;
+                for(index = 0; index<times; index++){
+                    i = temp.next()['value']
+                }
+            }else{
+                i = parseInt(Math.random()*len);
+            }
             j = qIndex[parseInt(Math.random()*qlen)];
             $("#question").text(target[i][j]);
-            $("#answer").text(target[i].join("; "));
             $("#answer").hide();
+            $("#answer").text(target[i].join("; "));
             $("#feedback").hide();
         }
     </script>
@@ -75,11 +83,12 @@
     <div data-role="page" id="PracticePage">
         <div data-role="header" style="background-color:darkcyan;color:white;text-shadow:0 0 black;">
             <a href="#" class="ui-btn ui-btn-left ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" style="top:11px;" data-rel="back"></a>
-            <h1 style="font-size: 20px;">携程考前练习</h1>
+            <h1 style="font-size: 20px;">XC考前练习</h1>
         </div>
         <div data-role="content">
             <h1 id="question" style="text-align:center;font-size:50px;"></h1>
             <p id="hint" style="text-align:center;font-size: 18px;color:gray;"></p>
+            <p style="text-align:center;font-size: 18px;color:gray;">如果你认为本题不重要，点击<span style="color:green;font-weight:bold;">记得</span>以避免重复出现。</p>
             <p style="text-align:center;font-size: 18px;color:gray;">点击任意位置查看答案</p>
             <p id="answer" style="text-align:center;font-size: 25px;color:darkcyan"></p>
             <div id="feedback" class="ui-grid-b" style="position:fixed;width:93%;bottom:10px;">
@@ -95,32 +104,45 @@
             </div>
         </div>
     </div>
-
-</body>
-<script>
-    $('#PracticePage').click(function(){
-        if(!showAnswer){
-            $("#answer").show();
-            $("#feedback").show();
-            showAnswer = true;
+    <script>
+        $('#PracticePage').click(function(){
+            if(!showAnswer){
+                $("#answer").show();
+                $("#feedback").show();
+                showAnswer = true;
+            }
+        });
+        $('#f1').click(function(){
+            if (HashMap.has(i)){
+                HashMap.set(i, HashMap.get(i)-1);
+                if (HashMap.get(i) == 0){
+                    HashMap.delete(i);
+                }
+            }
+            prepareNext();
+        });
+        $('#f2').click(function(){
+            if (!HashMap.has(i)){
+                HashMap.set(i, 1);
+            }
+            prepareNext();
+        });
+        $('#f3').click(function(){
+            if (HashMap.has(i)){
+                HashMap.set(i, HashMap.get(i)+1);
+            }else{
+                HashMap.set(i, 3);
+            }
+            prepareNext();
+        });
+        function prepareNext(){
+            $("#answer").hide();
+            $("#feedback").hide();
+            FillQuestion();
+            setTimeout(() => {
+                showAnswer = false;
+            }, 10);
         }
-    });
-    $('#f1').click(function(){
-        prepareNext();
-    });
-    $('#f2').click(function(){
-        prepareNext();
-    });
-    $('#f3').click(function(){
-        prepareNext();
-    });
-    function prepareNext(){
-        $("#answer").hide();
-        $("#feedback").hide();
-        FillQuestion();
-        setTimeout(() => {
-            showAnswer = false;
-        }, 10);
-    }
-</script>
+    </script>
+</body>
 </html>
