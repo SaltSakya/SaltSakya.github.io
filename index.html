@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>欢迎使用考前练习工具</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+    <script>
+        Airports = [["北京BJS", "首都", "PEK"], ["北京BJS", "大兴", "PKX"], ["上海SHA", "虹桥", "SHA"], ["上海SHA", "浦东", "PVG"], ["重庆", "重庆", "CKG"], ["天津", "天津", "TSN"], ["内蒙古", "呼和浩特", "HET"], ["山东", "济南", "TNA"], ["山东", "青岛", "TAO"], ["山东", "烟台", "YNT"], ["宁夏", "银川", "INC"], ["河南", "郑州", "CGO"], ["河北", "石家庄", "SJW"], ["青海", "西宁", "XNN"], ["吉林", "长春/吉林", "CGQ"], ["浙江", "杭州", "HGH"], ["浙江", "宁波", "NGB"], ["浙江", "温州", "WNZ"], ["江西", "南昌", "KHN"], ["福建", "福州", "FOC"], ["福建", "厦门", "XMN"], ["海南", "海口", "HAK"], ["海南", "三亚", "SYX"], ["广西", "南宁", "NNG"], ["广西", "桂林", "KWL"], ["西藏", "拉萨", "LXA"], ["广东", "广州", "CAN"], ["广东", "深圳", "SZX"], ["广东", "珠海", "ZUH"], ["安徽", "合肥", "HFE"], ["四川", "成都", "CTU"], ["新疆", "乌鲁木齐", "URC"], ["江苏", "南京", "NKG"], ["贵州", "贵阳", "KWE"], ["贵州", "遵义（新舟）", "ZYI"], ["贵州", "遵义（茅台）", "WMT"], ["陕西", "西安/咸阳", "SIA/XIY"], ["甘肃", "兰州", "LHW"], ["黑龙江", "哈尔滨", "HRB"], ["辽宁", "沈阳", "SHE"], ["云南", "昆明", "KMG"], ["云南", "丽江", "LJG"], ["山西", "太原", "TYN"], ["湖南", "长沙", "CSX"], ["湖北", "武汉", "WUH"]];
+        Airlines = [["CA", "国航", "999"], ["CZ", "南航", "784"], ["MU", "东航", "781"], ["FM", "上航", "774"], ["MF", "厦航", "731"], ["3U", "川航", "876"], ["HU", "海航", "880"], ["SC", "山航", "324"], ["ZH", "深航", "479"], ["KN", "联航", "822"], ["GJ", "长龙", "891"], ["Y8", "金鹏", ""], ["RY", "江西航空", ""], ["GT", "桂林航空", ""], ["9D", "天骄航空", ""], ["DZ", "东海", "893"], ["OQ", "重庆", "878"], ["KY", "昆明", "833"], ["8L", "祥鹏", "859"], ["JD", "首都", "234"], ["9C", "春秋", "786"], ["BK", "奥凯", "866"], ["FU", "福州", ""], ["PN", "西部", "847"], ["DR", "瑞丽", ""], ["GX", "北部湾", ""], ["A6", "湖南", ""], ["LT", "龙江航空", ""], ["QW", "青岛", "912"], ["EU", "成都", "811"], ["G5", "华夏", "987"], ["HO", "吉祥", "018"], ["CN", "大新华", "895"], ["GS", "天津", "826"], ["NS", "河北", "836"], ["TV", "西藏", "088"], ["JR", "幸福", "929"], ["UQ", "乌鲁木齐", ""], ["AQ", "九元", ""], ["GY", "多彩", ""], ["9H", "长安", ""], ["HL", "内蒙古通用航空", ""]];
+        StatusCodes = [["HK", "有位置，但未出票"], ["DK", "试订位成功"], ["RR", "机票已经出票"], ["NO", "未出票的订座被航空公司取消"], ["NN/DW", "试订位失败"], ["UN", "航班变动"], ["HX", "机票未使用，过起飞时间"], ["HL/LL", "座位正在申请中"], ["US", "航班取消"], ["XX", "记录编号被取消"], ["KK/KL", "座位已经申请到"], ["TK", "航班变动待确认"]];
+        target = Airports;
+        hint = "";
+        $(document).ready(function(){
+            //alert("第一种方法。"); 
+            window.location.replace("#HomePage");
+            $("#feedback").hide();
+        });
+    </script>
+
+    <div data-role="page" id="HomePage">
+        <div data-role="header">
+            <h1>携程考前练习</h1>
+        </div>
+        <div data-role="content">
+            <h1 style="text-align:center;font-size:40px;">&nbsp;&nbsp;&nbsp;练什么？</h1>
+            <p style="color:gray;">因为时间不够，其实你点哪个都是一起练的...</p>
+            <a id="practiceAirports" href="#PracticePage" style="height:60px;font-size:30px;line-height:50px;" data-role="button" data-icon="location">机场三代</a>
+            <a id="practiceAirlines" href="#PracticePage" style="height:60px;font-size:30px;line-height:50px;" data-role="button" data-icon="info">航空二代</a>
+            <a id="practiceStatusCodes" href="#PracticePage" style="height:60px;font-size:30px;line-height:50px;" data-role="button" data-icon="edit">常见订座情况</a>
+        </div>
+    </div>
+    <script>
+        $("#practiceAirports").click(function(){
+            target = Airports;
+            qIndex = [1,2];
+            hint = "请说出所在的省份，以及它对应的机场名或三代";
+            InitalizePracticePage();
+        });
+        $("#practiceAirlines").click(function(){
+            target = Airlines;
+            qIndex = [0,1];
+            hint = "请说出它对应的航空二代或航空公司";
+            InitalizePracticePage();
+        });
+        $("#practiceStatusCodes").click(function(){
+            target = StatusCodes;
+            qIndex = [0];
+            hint = "请说出该代码代表的含义";
+            InitalizePracticePage();
+        });
+
+        function InitalizePracticePage(){
+            showAnswer = false;
+            var HashMap = new Map();
+            len = target.length
+            qlen = qIndex.length
+            $("#hint").text(hint);
+            FillQuestion();
+        }
+
+        function FillQuestion(){
+            i = parseInt(Math.random()*len);
+            j = qIndex[parseInt(Math.random()*qlen)];
+            $("#question").text(target[i][j]);
+            $("#answer").text(target[i].join("; "));
+            $("#answer").hide();
+            $("#feedback").hide();
+        }
+    </script>
+
+    <div data-role="page" id="PracticePage">
+        <div data-role="header">
+            <a href="#" class="ui-btn ui-btn-left ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" data-rel="back"></a>
+            <h1>携程考前练习</h1>
+        </div>
+        <div data-role="content">
+            <h1 id="question" style="text-align:center;font-size:50px;"></h1>
+            <p id="hint" style="text-align:center;font-size: 18px;color:gray;"></p>
+            <p style="text-align:center;font-size: 18px;color:gray;">点击任意位置查看答案</p>
+            <p id="answer" style="text-align:center;font-size: 25px;color:darkcyan"></p>
+            <div id="feedback" class="ui-grid-b" style="position:fixed;width:93%;bottom:10px;">
+                <div class="ui-block-a">
+                    <a id="f1" href="#" class="ui-btn">记得</a>
+                </div>
+                <div class="ui-block-b">
+                    <a id="f2" href="#" class="ui-btn">模糊</a>
+                </div>
+                <div class="ui-block-c">
+                    <a id="f3" href="#" class="ui-btn">忘记</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    $('#PracticePage').click(function(){
+        if(!showAnswer){
+            $("#answer").show();
+            $("#feedback").show();
+            showAnswer = true;
+        }
+    });
+    $('#f1').click(function(){
+        prepareNext();
+    });
+    $('#f2').click(function(){
+        prepareNext();
+    });
+    $('#f3').click(function(){
+        prepareNext();
+    });
+    function prepareNext(){
+        $("#answer").hide();
+        $("#feedback").hide();
+        FillQuestion();
+        setTimeout(() => {
+            showAnswer = false;
+        }, 10);
+    }
+</script>
+</html>
