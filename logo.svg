@@ -1,0 +1,13 @@
+<svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <linearGradient y2="0" x2="1" y1="0" x1="0" id="svg_4">
+   <stop offset="0" stop-opacity="0.99609" stop-color="#003f7f"/>
+   <stop offset="1" stop-opacity="0.99609" stop-color="#00bfbf"/>
+  </linearGradient>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <polygon id="svg_1" fill="url(#svg_4)" points="312,10 10,184.4 10,244.4 115,305 115,365 10,425 10,485 167,395 167,275 62,214.4 282,87.3 282,485 334,455 334,297.8 386,267.8 386,425 438,395 438,237.8 490,207.8 490,147.8 438,177.8 438,117.8 386,147.8 386,207.8 334,237.8 334,10"/>
+  <polygon id="svg_2" fill="#ff7f00" points="177,280.8, 272,335.7 272,485 229.5,460.5 229.5,370.5 219.5,364.7 219.5,425.3 177,400.8"/>
+ </g>
+</svg>
